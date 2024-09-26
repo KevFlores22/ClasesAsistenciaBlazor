@@ -1,0 +1,55 @@
+﻿@page "/clase"
+@using clases_asistenciaAPI.DTO
+@using clases_asistenciaAPI.Services
+
+<h3>Lista de Clases</h3>
+
+
+
+@if (clase == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clase in clase)
+        {
+            <tr>
+                <td>@clase.ClaseNombre</td>
+                <td>@clase.ClaseDescripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@if(!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@inject ClaseService claseService
+@code {
+    private List<ClaseResponse>? clase;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            clase = await claseService.GetClases();
+        }
+        catch(Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}

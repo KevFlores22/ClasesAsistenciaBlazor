@@ -1,0 +1,45 @@
+﻿@page "/"
+@using clases_asistenciaAPI.DTO
+@using clases_asistenciaAPI.Services
+
+<PageTitle>Login</PageTitle>
+
+<EditForm Model="usuarioSession" OnValidSubmit="Login">
+    <div class="mb-3">
+        <label class="form-label">NombreUsuario</label>
+        <InputText class="form-control" @bind-Value="usuarioSession.UsuarioNombre"/>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <InputText class="form-control" @bind-Value="usuarioSession.UsuarioPassword"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger mt-3">@errorMessage</div>
+    }
+</EditForm>
+
+@inject NavigationManager navigationManager
+@inject AuthService authService
+@code{
+    private UsuarioSession usuarioSession = new UsuarioSession();
+    private string errorMessage;
+
+    private async Task Login()
+    {
+        var token = await authService.Login(usuarioSession);
+        if (string.IsNullOrEmpty(token))
+        {
+            errorMessage = "Credenciales Incorrectas";
+            return;
+        }
+
+        await authService.SetToken(token);
+        navigationManager.NavigateTo("/ weather");
+    }
+
+}
