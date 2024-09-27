@@ -6,7 +6,7 @@
 
 <EditForm Model="usuarioSession" OnValidSubmit="Login">
     <div class="mb-3">
-        <label class="form-label">NombreUsuario</label>
+        <label class="form-label">Nombre Usuario</label>
         <InputText class="form-control" @bind-Value="usuarioSession.UsuarioNombre"/>
     </div>
 
@@ -39,7 +39,7 @@
         }
 
         await authService.SetToken(token);
-        navigationManager.NavigateTo("/ weather");
+        navigationManager.NavigateTo("/weather");
     }
 
 }

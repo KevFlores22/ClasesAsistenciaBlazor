@@ -1,0 +1,54 @@
+﻿@page "/Estudiante"
+@using clases_asistenciaAPI.DTO
+@using clases_asistenciaAPI.Services
+
+<h3>Lista de Estudiante</h3>
+
+@if (estudiantes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var estudiante in estudiantes)
+        {
+            <tr>
+                <td>@estudiante.EstudianteNombre</td>
+                <td>@estudiante.EstudianteApellido</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@if(!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@inject EstudianteService estudianteService
+@code {
+    private List<EstudianteResponse> estudiantes;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            estudiantes = await estudianteService.GetEstudiantes();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+}

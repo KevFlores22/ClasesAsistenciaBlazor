@@ -14,6 +14,7 @@ builder.Services.AddScoped(o => new HttpClient
 
     builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ClaseService>();
+builder.Services.AddScoped<EstudianteService>();
 
 var app = builder.Build();
 

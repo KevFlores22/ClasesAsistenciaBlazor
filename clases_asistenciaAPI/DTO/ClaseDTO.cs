@@ -18,6 +18,6 @@
 
         //public virtual ICollection<ReportesAsistencia> ReportesAsistencia { get; set; } = new List<ReportesAsistencia>();
 
-        public virtual UsuarioResponse Usuario { get; set; }
+        //public virtual UsuarioResponse Usuario { get; set; }
     }
 }
