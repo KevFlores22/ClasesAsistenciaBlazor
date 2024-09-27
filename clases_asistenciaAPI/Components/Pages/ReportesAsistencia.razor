@@ -1,0 +1,62 @@
+﻿@page "/reportesAsistencia"
+@using clases_asistenciaAPI.DTO
+@using clases_asistenciaAPI.Services
+
+<h3>Lista de ReportesAsistencia</h3>
+
+@if (reportesAsistencia == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Clase</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Total Asistencias</th>
+                <th>Total Ausencias</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reportesAsistemcium in reportesAsistencia)
+            {
+                <tr>
+                    <td>@reportesAsistemcium.EstudianteId</td>
+                    <td>@reportesAsistemcium.ClaseId</td>
+                    <td>@reportesAsistemcium.FechaInicio</td>
+                    <td>@reportesAsistemcium.FechaFin</td>
+                    <td>@reportesAsistemcium.TotalAsistencias</td>
+                    <td>@reportesAsistemcium.TotalAusencias</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@inject ReportesAsistenciaService reportesAsistenciaService
+@code {
+    private List<ReportesAsistenciumResponse> reportesAsistencia;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            reportesAsistencia = await reportesAsistenciaService.GetReportesAsistencia();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+}
