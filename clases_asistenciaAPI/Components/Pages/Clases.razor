@@ -15,16 +15,22 @@ else
 <table class="table">
     <thead>
         <tr>
+            <th>Clase</th>
+            <th>Usuario</th>
             <th>Nombre</th>
             <th>Descripción</th>
+            <th>Horario</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var clase in clase)
         {
             <tr>
+                <td>@clase.ClaseId</td>
+                <td>@clase.UsuarioId</td>
                 <td>@clase.ClaseNombre</td>
                 <td>@clase.ClaseDescripcion</td>
+                <td>@clase.Horario</td>
             </tr>
         }
     </tbody>

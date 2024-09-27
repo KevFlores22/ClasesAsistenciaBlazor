@@ -1,0 +1,58 @@
+﻿@page "/asistencias"
+@using clases_asistenciaAPI.DTO
+@using clases_asistenciaAPI.Services
+
+<h3>Lista de Asistencias</h3>
+
+@if (asistencias == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Clase</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var asistencium in asistencias)
+            {
+                <tr>
+                    <td>@asistencium.EstudianteId</td>
+                    <td>@asistencium.ClaseId</td>
+                    <td>@asistencium.Fecha</td>
+                    <td>@asistencium.Estado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@inject AsistenciaService asistenciaService
+@code {
+    private List<AsistenciumResponse> asistencias;
+    private string errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            asistencias = await asistenciaService.GetAsistencia();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+}

@@ -3,18 +3,18 @@ using System.Net.Http.Headers;
 
 namespace clases_asistenciaAPI.Services
 {
-    public class AsistenciaService
+    public class ReportesAsistenciaService
     {
         private readonly HttpClient _httpClient;
         private readonly AuthService _authService;
 
-        public AsistenciaService(HttpClient httpClient, AuthService authService)
+        public ReportesAsistenciaService(HttpClient httpClient, AuthService authService)
         {
             _httpClient = httpClient;
             _authService = authService;
         }
 
-        public async Task<List<AsistenciumResponse>> GetAsistencia()
+        public async Task<List<ReportesAsistenciumResponse>> GetReportesAsistencia()
         {
             try
             {
@@ -25,13 +25,13 @@ namespace clases_asistenciaAPI.Services
                     throw new InvalidOperationException("El token es nulo o invalido. IniciarSesion");
                 }
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var response = await _httpClient.GetFromJsonAsync<List<AsistenciumResponse>>("Api/Asistencia");
+                var response = await _httpClient.GetFromJsonAsync<List<ReportesAsistenciumResponse>>("Api/ReportesAsistencia");
 
                 return response;
             }
             catch (HttpRequestException)
             {
-                throw new Exception("Error al obtener Asistencia. Revisar conexion a internet.");
+                throw new Exception("Error al obtener ReporteAsistencia. Revisar conexion a internet.");
             }
             catch (Exception ex)
             {

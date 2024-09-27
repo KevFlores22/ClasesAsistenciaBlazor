@@ -2,7 +2,7 @@
 @using clases_asistenciaAPI.DTO
 @using clases_asistenciaAPI.Services
 
-<h3>Lista de Estudiante</h3>
+<h3>Lista de Estudiantes</h3>
 
 @if (estudiantes == null)
 {
@@ -13,6 +13,8 @@ else
 <table class="table">
     <thead>
         <tr>
+            <th>Estudiante</th>
+            <th>Clase</th>
             <th>Nombre</th>
             <th>Apellido</th>
         </tr>
@@ -21,6 +23,8 @@ else
         @foreach (var estudiante in estudiantes)
         {
             <tr>
+                <td>@estudiante.EstudianteId</td>
+                <td>@estudiante.ClaseId</td>
                 <td>@estudiante.EstudianteNombre</td>
                 <td>@estudiante.EstudianteApellido</td>
             </tr>
