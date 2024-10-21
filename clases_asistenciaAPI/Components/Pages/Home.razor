@@ -4,56 +4,30 @@
 
 <PageTitle>Login</PageTitle>
 
-<div class="login-background d-flex justify-content-center align-items-start" style="height: 80vh; margin-top: 50px;">
-    <div class="card p-4 shadow-sm" style="width: 300px; background-color: rgba(255, 255, 255, 0.8);">
-        <EditForm Model="usuarioSession" OnValidSubmit="Login">
-            <div class="mb-3">
-                <label class="form-label">Nombre Usuario</label>
-                <InputText class="form-control" @bind-Value="usuarioSession.UsuarioNombre" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                <InputText type="password" class="form-control" @bind-Value="usuarioSession.UsuarioPassword" />
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-
-            @if (!string.IsNullOrEmpty(errorMessage))
-            {
-                <div class="alert alert-danger mt-3">@errorMessage</div>
-            }
-        </EditForm>
+<EditForm Model="usuarioSession" OnValidSubmit="Login">
+    <div class="mb-3">
+        <label class="form-label">Nombre Usuario</label>
+        <InputText class="form-control" @bind-Value="usuarioSession.UsuarioNombre"/>
     </div>
-</div>
+
+    <div class="mb-3">
+        <label class="form-label">Contraseña</label>
+        <InputText class="form-control" @bind-Value="usuarioSession.UsuarioPassword"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger mt-3">@errorMessage</div>
+    }
+</EditForm>
 
 @inject NavigationManager navigationManager
 @inject AuthService authService
-
-@code {
+@code{
     private UsuarioSession usuarioSession = new UsuarioSession();
     private string errorMessage;
-
-    private bool isAuthenticated;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            isAuthenticated = await authService.IsAuthenticated();
-
-            if (isAuthenticated)
-            {
-                navigationManager.NavigateTo("/counter");
-            }
-            else
-            {
-                navigationManager.NavigateTo("/");
-            }
-
-            StateHasChanged();
-        }
-    }
 
     private async Task Login()
     {
@@ -65,14 +39,7 @@
         }
 
         await authService.SetToken(token);
-        navigationManager.NavigateTo("/weather", true);
+        navigationManager.NavigateTo("/weather");
     }
-}
 
-<style>
-    .login-background {
-        background-image: url('/Imagenes/Logo2.jpg');
-        background-size: cover;
-        background-position: center;
-    }
-</style>
+}
